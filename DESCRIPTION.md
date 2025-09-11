@@ -1,0 +1,1 @@
+The project is a 3D printer filament spool manager. It's an Android application written in Kotlin using Jetpack Compose that allows users to add, track, and manage their filament spools and associated print jobs.
