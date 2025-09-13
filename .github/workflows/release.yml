@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Grant write permission for contents to create releases
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
@@ -19,10 +21,12 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
+      - name: List APK directory contents
+        run: ls -R app/build/outputs/apk/release/ || true # List contents for debugging
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          files: app/build/outputs/apk/release/app-release.apk
+          files: app/build/outputs/apk/release/*.apk # Use glob to match any APK file
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
